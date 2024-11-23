@@ -102,9 +102,9 @@ class _HomePageState extends State<HomePage> {
                         _selectedIndex = 0;
                       });
                     },
-                    child: Column(
+                    child: const Column(
                       children: [
-                        const Text(
+                        Text(
                           'Activity',
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
@@ -165,6 +165,8 @@ class _HomePageState extends State<HomePage> {
                                     children: [
                                       GridView.builder(
                                         shrinkWrap: true,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 16.0),
                                         gridDelegate:
@@ -174,9 +176,13 @@ class _HomePageState extends State<HomePage> {
                                           mainAxisSpacing: 10.0,
                                           childAspectRatio: 0.8,
                                         ),
-                                        itemCount:
-                                            provider.wallpapers.length + 1,
+                                        itemCount: provider.wallpapers.length,
                                         itemBuilder: (context, index) {
+                                          Wallpaper wallpaperData =
+                                              provider.wallpapers[
+                                                  provider.wallpapers.length -
+                                                      1 -
+                                                      index];
                                           if (index ==
                                               provider.wallpapers.length) {
                                             if (_isLoading) {
@@ -187,8 +193,6 @@ class _HomePageState extends State<HomePage> {
                                             return Container();
                                           }
 
-                                          Wallpaper wallpaperData =
-                                              provider.wallpapers[index];
                                           return GestureDetector(
                                             onTap: () {
                                               Navigator.push(
@@ -236,8 +240,9 @@ class _HomePageState extends State<HomePage> {
                                                               child,
                                                               loadingProgress) {
                                                             if (loadingProgress ==
-                                                                null)
+                                                                null) {
                                                               return child;
+                                                            }
                                                             return const CircularProgressIndicator();
                                                           },
                                                         ),
@@ -251,7 +256,7 @@ class _HomePageState extends State<HomePage> {
                                                                         0.5),
                                                             radius: 20,
                                                             child: Text(
-                                                              '\$${(index + 1) * 10}', // Price or Rating
+                                                              '\$${(index + 1) * 10}',
                                                               style:
                                                                   const TextStyle(
                                                                 color: Colors
@@ -266,7 +271,7 @@ class _HomePageState extends State<HomePage> {
                                                   ),
                                                   const SizedBox(height: 8),
                                                   Text(
-                                                    'Product $index', // Use dynamic data here
+                                                    'Product ${(provider.wallpapers.length - 1) - index}',
                                                     style: const TextStyle(
                                                       fontSize: 14,
                                                       fontWeight:

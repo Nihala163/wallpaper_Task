@@ -27,7 +27,8 @@ class WallpaperProvider extends ChangeNotifier {
         if (res is List && res.isNotEmpty) {
           List<Wallpaper> wallpapersList =
               res.map((item) => Wallpaper.fromJson(item)).toList();
-          _wallpapers.addAll(wallpapersList);
+          // Reverse the new list and add to the top of the existing list
+          _wallpapers.insertAll(0, wallpapersList.reversed);
           _page++;
         }
       } catch (e) {
